@@ -1,0 +1,8 @@
+output/*
+resample.mrml
+ITKMaurerDist/build
+VTKHausdorff/build
+vtk2vtp/build
+*~
+#*
+input/*.nii
