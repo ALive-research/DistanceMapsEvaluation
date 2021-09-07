@@ -12,6 +12,20 @@ modules="ITKMaurerDist VTKHausdorff vtk2vtp vtk2vtp ITKBruteForceDist ITKCropImg
 
 
 echo "-------------------------------------------------------------------------"
+echo "                        Unzip input files"
+echo "-------------------------------------------------------------------------"
+
+cd input
+
+for file in $(ls | grep .zip$)
+do
+    echo -e "[${YELLOW}'$file'${NC}] Uncompressing..."
+    unzip $file
+done
+
+cd ..
+
+echo "-------------------------------------------------------------------------"
 echo "          Compiling Modules for ITK/VTK Distances Test"
 echo "-------------------------------------------------------------------------"
 
