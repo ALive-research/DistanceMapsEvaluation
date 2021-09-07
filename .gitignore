@@ -3,6 +3,8 @@ resample.mrml
 ITKMaurerDist/build
 VTKHausdorff/build
 vtk2vtp/build
+ITKBruteForceDist/build
+ITKCropImg/build
+input/*.nii
 *~
 #*
-input/*.nii

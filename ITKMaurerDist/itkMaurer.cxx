@@ -59,15 +59,15 @@ int main(int argc, char *argv[])
   maurerOutput->Allocate();
   maurerOutput->Update();
 
-  itk::ImageRegionConstIterator<ImageType> itA(imageLiver, regionLiver);
-  itk::ImageRegionIterator<ImageType> outputImageIterator(maurerOutput, maurerOutput->GetLargestPossibleRegion());
-  for (itA.GoToBegin(),outputImageIterator.GoToBegin(); !itA.IsAtEnd(); ++itA,++outputImageIterator)
-  {
-     float voxelValueA = (int)itA.Get();
-    if (voxelValueA == 0) {
-      outputImageIterator.Set(-1);
-    } 
-  }
+  //itk::ImageRegionConstIterator<ImageType> itA(imageLiver, regionLiver);
+  //itk::ImageRegionIterator<ImageType> outputImageIterator(maurerOutput, maurerOutput->GetLargestPossibleRegion());
+  //for (itA.GoToBegin(),outputImageIterator.GoToBegin(); !itA.IsAtEnd(); ++itA,++outputImageIterator)
+  //{
+  // float voxelValueA = (int)itA.Get();
+  //if (voxelValueA == 0) {
+  //  outputImageIterator.Set(-1);
+  //} 
+  //}
   clock.Stop();  
   
   itk::ImageFileWriter<ImageType>::Pointer writerLiver;

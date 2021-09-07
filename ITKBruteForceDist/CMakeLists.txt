@@ -8,7 +8,6 @@ include_directories(.)
 find_package(ITK REQUIRED)
 include(${ITK_USE_FILE})
 
-find_package(VTK 9.0 REQUIRED)
+add_executable(itkBruteForce itkBruteForce.cxx)
+target_link_libraries(itkBruteForce ${ITK_LIBRARIES} ${VTK_LIBRARIES})
 
-add_executable(vtkHausdorff vtkHausdorffDist.cxx)
-target_link_libraries(vtkHausdorff ${ITK_LIBRARIES} ${VTK_LIBRARIES})

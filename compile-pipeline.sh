@@ -8,7 +8,7 @@ NC='\033[0m' # No Color
 
 #---Variables---#
 build="build"
-modules="ITKMaurerDist VTKHausdorff vtk2vtp"
+modules="ITKMaurerDist VTKHausdorff vtk2vtp vtk2vtp ITKBruteForceDist ITKCropImg"
 
 
 echo "-------------------------------------------------------------------------"
