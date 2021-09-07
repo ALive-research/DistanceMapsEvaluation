@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
   const int loopBreak = 10;
   int itn = 0;
   double avgTot = 0;
-  double avg;
+  double err;
   size_t totPoints = 0;
   double maxDiff = 0.0;
   double minDiff = 10000000.0;
@@ -196,28 +196,26 @@ int main(int argc, char *argv[])
     kDTree->GetDataSet()->GetPoint(iD, closestPoint);
     double pixelValue = it.Value();
     double value = HausdorffOutput->GetPointData()->GetArray("Distance")->GetComponent(iD, 0);
-    
+
     totPoints++;
-    avg = abs(value - pixelValue);
-    avgTot += avg;
-    
-    if (avg > maxDiff)
-      maxDiff = avg;
-    
-    if (avg < minDiff)
-      minDiff = avg;
-    
-    //std::cout << "[REFER]ImgPoint(" << physPointKDTree[0] <<  "," << physPointKDTree[1] << "," << physPointKDTree[2] << ")="
-    //	      << pixelValue << " vs " << "[TARGET] Grid Closest Point(" << closestPoint[0] << "," << closestPoint[1] << ","
-    //	      << closestPoint[2] << ")=" << value << " => Difference=" << abs(value - pixelValue) << std::endl;
-    //if (++itn == loopBreak)
-    //break;    
+    if (pixelValue != -1) {
+      err = abs(value - pixelValue);
+      avgTot += err;
+      
+      if (err > maxDiff) {
+	maxDiff = err;
+	std::cout << "[NEW MAXIMUM] Grid Value = " << value << ", Image value = " << pixelValue << " Error = " << maxDiff << std::endl;
+      }
+      
+      if (err < minDiff)
+	minDiff = err;
+    }
   }
 
   cout.precision(3);
   std::cout << "#VTK-GRID=" << sampGrid << ";" << avgTot / totPoints << ";" << maxDiff << ";" << minDiff
 	    << ";"  << tDist << ";" << tGrid << std::endl;
-  
+
   //+++++++++++++++++++++++++++++++++++++++++++//
   //+      [VTK] WRITE HAUSDORFF DISTANCE     +//
   //+++++++++++++++++++++++++++++++++++++++++++//   
