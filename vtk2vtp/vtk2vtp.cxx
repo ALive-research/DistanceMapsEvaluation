@@ -26,10 +26,7 @@ int main(int argc, char* argv[])
   // All of the standard data types can be checked and obtained like this:
   if (reader->IsFilePolyData())
   {
-    std::cout << "output is polydata," << std::endl;
     auto output = reader->GetPolyDataOutput();
-    std::cout << "   output has " << output->GetNumberOfPoints() << " points."
-              << std::endl;
 
     vtkNew<vtkXMLPolyDataWriter> polyDataWriter;
     polyDataWriter->SetInputData(output);

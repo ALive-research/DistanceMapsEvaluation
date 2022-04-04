@@ -10,5 +10,11 @@ include(${ITK_USE_FILE})
 
 find_package(VTK 9.0 REQUIRED)
 
-add_executable(vtkHausdorffDist vtkHausdorffDist.cxx)
-target_link_libraries(vtkHausdorffDist ${ITK_LIBRARIES} ${VTK_LIBRARIES})
+
+set(CMAKE_CXX_FLAGS "-fopenmp")
+
+add_executable(vtkHausdorff vtkHausdorffDist.cxx
+  ./HausdorffDistanceOctrees/vtkHausdorffDistanceOctreesFilter.cxx
+  ./HausdorffDistancePointLocator/vtkHausdorffDistancePointLocatorFilter.cxx)
+
+target_link_libraries(vtkHausdorff ${ITK_LIBRARIES} ${VTK_LIBRARIES})

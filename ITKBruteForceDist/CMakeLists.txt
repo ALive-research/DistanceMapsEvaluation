@@ -8,6 +8,6 @@ include_directories(.)
 find_package(ITK REQUIRED)
 include(${ITK_USE_FILE})
 
-add_executable(itkMaurer itkMaurer.cxx)
-target_link_libraries(itkMaurer ${ITK_LIBRARIES} ${VTK_LIBRARIES})
+add_executable(itkBruteForce itkBruteForce.cxx)
+target_link_libraries(itkBruteForce ${ITK_LIBRARIES} ${VTK_LIBRARIES})
 
