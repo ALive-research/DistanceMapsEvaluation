@@ -2,7 +2,7 @@
 #
 cmake_minimum_required(VERSION 3.16)
 
-set(PROJECT_NAME "ResectionSegmentsExperiment")
+set(PROJECT_NAME "DistanceMapsEvaluation")
 
 #-----------------------------------------------------------------------------
 # Enable C++11
