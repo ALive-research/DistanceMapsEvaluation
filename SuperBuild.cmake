@@ -54,8 +54,10 @@ endif()
 set(itkSphereImageGenerator_EXTERNAL_NAME itkSphereImageGenerator)
 set(itkRadialDistance_EXTERNAL_NAME itkRadialDistance)
 set(itkMaurerDistance_EXTERNAL_NAME itkMaurerDistance)
+set(ITK_EXTERNAL_NAME ITK)
 
 set(${PROJECT_NAME}_DEPENDENCIES
+  ${ITK_EXTERNAL_NAME}
   ${itkMaurerDistance_EXTERNAL_NAME}
   ${itkRadialDistance_EXTERNAL_NAME}
   ${itkSphereImageGenerator_EXTERNAL_NAME}
@@ -91,7 +93,7 @@ mark_as_superbuild(${PROJECT_NAME}_DEPENDENCIES:STRING)
 ExternalProject_Include_Dependencies(${PROJECT_NAME} DEPENDS_VAR ${PROJECT_NAME}_DEPENDENCIES)
 
 #------------------------------------------------------------------------------
-# Configure and build Slicer
+# Configure and build
 #------------------------------------------------------------------------------
 set(proj ${PROJECT_NAME})
 
@@ -112,6 +114,7 @@ ExternalProject_Add(${proj}
     -DCMAKE_CXX_EXTENSIONS:BOOL=${CMAKE_CXX_EXTENSIONS}
     -DADDITIONAL_C_FLAGS:STRING=${ADDITIONAL_C_FLAGS}
     -DADDITIONAL_CXX_FLAGS:STRING=${ADDITIONAL_CXX_FLAGS}
+    -DBUILD_TESTING:BOOL=${BUILD_TESTING}
     -D${PROJECT_NAME}_REQUIRED_C_FLAGS:STRING=${${PROJECT_NAME}_REQUIRED_C_FLAGS}
     -D${PROJECT_NAME}_REQUIRED_CXX_FLAGS:STRING=${${PROJECT_NAME}_REQUIRED_CXX_FLAGS}
     -D${PROJECT_NAME}_SUPERBUILD:BOOL=OFF

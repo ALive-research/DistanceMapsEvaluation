@@ -124,3 +124,12 @@ set(ITK_USE_CLANGFORMAT OFF)
 # if(${PROJECT_NAME}_BUILD_ImageIncrement)
 #   add_subdirectory(ImageIncrement)
 # endif()
+
+#------------------------------------------------------------------------------
+# Testing
+#------------------------------------------------------------------------------
+option(BUILD_TESTING "Build testing" OFF)
+mark_as_superbuild(BUILD_TESTING)
+if(BUILD_TESTING)
+  include(CTest)
+endif()

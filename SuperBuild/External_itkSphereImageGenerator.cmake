@@ -16,7 +16,7 @@ ExternalProject_SetIfNotDefined(
 
 ExternalProject_SetIfNotDefined(
   ${PROJECT_NAME}_${proj}_GIT_TAG
-  "f62ffed9bbfdec109dafb2193948a10eaa0d365e"
+  "b3d570bee09c6401e9036ff7414a0843ba186cd3"
   QUIET
   )
 
@@ -47,6 +47,7 @@ ExternalProject_Add(${proj}
   -DTCLAP_DIR:PATH=${TCLAP_DIR}
   -DGIT_EXECUTABLE:FILEPATH=${GIT_EXECUTABLE} # Used in itkSphereImageGeneratorModuleRemote
   -DBUILD_SHARED_LIBS:BOOL=ON
+  -DBUILD_TESTING:BOOL=${BUILD_TESTING}
   ${EXTERNAL_PROJECT_OPTIONAL_CMAKE_CACHE_ARGS}
   INSTALL_COMMAND ""
   DEPENDS
