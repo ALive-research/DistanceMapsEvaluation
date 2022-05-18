@@ -51,6 +51,7 @@ if(NOT DEFINED ${PROJECT_NAME}_VERSION_PATCH)
 endif()
 project(${PROJECT_NAME} VERSION "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}")
 
+
 #-----------------------------------------------------------------------------
 # Superbuild Option - Enabled by default
 #-----------------------------------------------------------------------------
@@ -133,3 +134,22 @@ mark_as_superbuild(BUILD_TESTING)
 if(BUILD_TESTING)
   include(CTest)
 endif()
+
+#------------------------------------------------------------------------------
+# Configure the testing environment
+#------------------------------------------------------------------------------
+set(TEST_TMP_DIR ${CMAKE_BINARY_DIR}/TestTemp)
+set(SPHERE_GENERATOR ${itkSphereImageGenerator_DIR}/itkSphereImageGenerator)
+
+configure_file(CMake/environment.sh.in scripts/environment.sh @ONLY)
+
+file(MAKE_DIRECTORY ${TEST_TMP_DIR})
+#------------------------------------------------------------------------------
+# Move over the scripts
+#------------------------------------------------------------------------------
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/scripts)
+file(GLOB SCRIPTS "scripts/*.sh")
+file(INSTALL ${SCRIPTS}
+  PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
+  DESTINATION "${CMAKE_BINARY_DIR}/scripts/"
+  )

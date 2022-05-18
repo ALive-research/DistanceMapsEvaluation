@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+SPHERE_GENERATOR="@SPHERE_GENERATOR@"
+TEST_TMP_DIR="@TEST_TMP_DIR@"
