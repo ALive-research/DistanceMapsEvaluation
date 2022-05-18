@@ -120,11 +120,22 @@ set(ITK_USE_KWSTYLE OFF)
 set(ITK_USE_CLANGFORMAT OFF)
 
 #------------------------------------------------------------------------------
-# Add sub-projects
+# Configure external data
 #------------------------------------------------------------------------------
-# if(${PROJECT_NAME}_BUILD_ImageIncrement)
-#   add_subdirectory(ImageIncrement)
-# endif()
+include(ExternalData)
+set(ExternalData_URL_TEMPLATES "https://github.com/ALive-research/ALiveResearchTestingData/releases/download/%(algo)/%(hash)")
+
+#------------------------------------------------------------------------------
+# Configure the testing environment
+#------------------------------------------------------------------------------
+set(TEST_TMP_DIR ${CMAKE_BINARY_DIR}/TestTemp)
+set(SPHERE_GENERATOR ${itkSphereImageGenerator_DIR}/itkSphereImageGenerator)
+set(MAURER_OPERATOR ${itkMaurerDistance_DIR}/itkMaurerDistance)
+set(IMAGE_COMPARE ${itkImageCompare_DIR}/itkImageCompare)
+
+configure_file(CMake/environment.sh.in scripts/environment.sh @ONLY)
+
+file(MAKE_DIRECTORY ${TEST_TMP_DIR})
 
 #------------------------------------------------------------------------------
 # Testing
@@ -133,17 +144,9 @@ option(BUILD_TESTING "Build testing" OFF)
 mark_as_superbuild(BUILD_TESTING)
 if(BUILD_TESTING)
   include(CTest)
+  add_subdirectory(Testing)
 endif()
 
-#------------------------------------------------------------------------------
-# Configure the testing environment
-#------------------------------------------------------------------------------
-set(TEST_TMP_DIR ${CMAKE_BINARY_DIR}/TestTemp)
-set(SPHERE_GENERATOR ${itkSphereImageGenerator_DIR}/itkSphereImageGenerator)
-
-configure_file(CMake/environment.sh.in scripts/environment.sh @ONLY)
-
-file(MAKE_DIRECTORY ${TEST_TMP_DIR})
 #------------------------------------------------------------------------------
 # Move over the scripts
 #------------------------------------------------------------------------------
@@ -153,3 +156,4 @@ file(INSTALL ${SCRIPTS}
   PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
   DESTINATION "${CMAKE_BINARY_DIR}/scripts/"
   )
+
