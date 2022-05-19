@@ -55,6 +55,7 @@ set(itkSphereImageGenerator_EXTERNAL_NAME itkSphereImageGenerator)
 set(itkRadialDistance_EXTERNAL_NAME itkRadialDistance)
 set(itkMaurerDistance_EXTERNAL_NAME itkMaurerDistance)
 set(itkImageCompare_EXTERNAL_NAME itkImageCompare)
+set(itkDistanceImageFilter_EXTERNAL_NAME itkDistanceImageFilter)
 set(ITK_EXTERNAL_NAME ITK)
 
 set(${PROJECT_NAME}_DEPENDENCIES
@@ -63,6 +64,7 @@ set(${PROJECT_NAME}_DEPENDENCIES
   ${itkImageCompare_EXTERNAL_NAME}
   ${itkRadialDistance_EXTERNAL_NAME}
   ${itkSphereImageGenerator_EXTERNAL_NAME}
+  ${itkDistanceImageFilter_EXTERNAL_NAME}
   )
 #------------------------------------------------------------------------------
 # REsectionSegmentsExperiment_ADDITIONAL_PROJECTS
