@@ -73,3 +73,25 @@ ExternalData_Add_Test(Test_itkRadialDistance
   )
 
 ExternalData_Add_Target(Test_itkRadialDistance)
+
+#------------------------------------------------------------------------------
+# Compare radial with base
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkRadialBaseDistanceCompare
+  NAME Test_itkRadialBaseDistanceCompare
+  COMMAND  ${IMAGE_COMPARE} -a ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii -k ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o -m 1.0 -M 1.0 -s 1.0 -e 1.0
+  )
+
+ExternalData_Add_Target(Test_itkRadialBaseDistanceCompare)
+set_tests_properties(Test_itkRadialBaseDistanceCompare PROPERTIES DEPENDS "Test_itkRadialDistance;Test_itkDistanceImageFilter")
+
+#------------------------------------------------------------------------------
+# Compare Maurer with base
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkRadialMaurerDistanceCompare
+  NAME Test_itkRadialMaurerDistanceCompare
+  COMMAND  ${IMAGE_COMPARE} -a ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii -k ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o -m 1.0 -M 1.0 -s 1.0 -e 1.0
+  )
+
+ExternalData_Add_Target(Test_itkRadialMaurerDistanceCompare)
+set_tests_properties(Test_itkRadialBaseDistanceCompare PROPERTIES DEPENDS "Test_itkRadialDistance;Test_itkMaurerDistance")
