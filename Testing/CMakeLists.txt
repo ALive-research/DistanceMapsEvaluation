@@ -4,6 +4,7 @@
 set(SPHERE_FILE_NAME "sphere_100_1_20")
 set(SPHERE_MAURER_FILE_NAME "sphere_100_1_20_maurer")
 set(SPHERE_BASE_FILE_NAME "sphere_100_1_20_base")
+set(SPHERE_RADIAL_FILE_NAME "sphere_100_1_20_radial")
 
 #------------------------------------------------------------------------------
 # Generate a sphere
@@ -62,3 +63,13 @@ ExternalData_Add_Test(Test_itkSphereMaurerBaseCompare
 ExternalData_Add_Target(Test_itkSphereMaurerBaseCompare)
 
 set_tests_properties(Test_itkSphereMaurerBaseCompare PROPERTIES DEPENDS "Test_itkSphereImageGenerator")
+
+#------------------------------------------------------------------------------
+# Generate radial distance image
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkRadialDistance
+  NAME Test_itkRadialDistance
+  COMMAND  ${RADIAL_DISTANCE} -z 100 -s 1 -r 20 -o ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii
+  )
+
+ExternalData_Add_Target(Test_itkRadialDistance)

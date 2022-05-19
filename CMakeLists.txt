@@ -133,6 +133,7 @@ set(TEST_TMP_DIR ${CMAKE_BINARY_DIR}/TestTemp)
 set(SPHERE_GENERATOR ${itkSphereImageGenerator_DIR}/itkSphereImageGenerator)
 set(MAURER_OPERATOR ${itkMaurerDistance_DIR}/itkMaurerDistance)
 set(BASE_OPERATOR ${itkDistanceImageFilter_DIR}/itkDistanceImageFilter)
+set(RADIAL_DISTANCE ${itkRadialDistance_DIR}/itkRadialDistance)
 set(IMAGE_COMPARE ${itkImageCompare_DIR}/itkImageCompare)
 
 configure_file(CMake/environment.sh.in scripts/environment.sh @ONLY)
