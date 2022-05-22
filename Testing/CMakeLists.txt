@@ -4,6 +4,7 @@
 set(SPHERE_FILE_NAME "sphere_101_1_20")
 set(SPHERE_MAURER_FILE_NAME "sphere_101_1_20_maurer")
 set(SPHERE_BASE_FILE_NAME "sphere_101_1_20_base")
+set(SPHERE_CROPPED_FILE_NAME "sphere_101_1_20_cropped")
 set(SPHERE_RADIAL_FILE_NAME "sphere_101_1_20_radial")
 
 #------------------------------------------------------------------------------
@@ -95,3 +96,26 @@ ExternalData_Add_Test(Test_itkRadialMaurerDistanceCompare
 
 ExternalData_Add_Target(Test_itkRadialMaurerDistanceCompare)
 set_tests_properties(Test_itkRadialBaseDistanceCompare PROPERTIES DEPENDS "Test_itkRadialDistance;Test_itkMaurerDistance")
+
+#------------------------------------------------------------------------------
+# Crop sphere labelmap to the bounding box
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkBoundingBox
+  NAME Test_itkBoundingBox
+  COMMAND  ${BOUNDING_BOX} -o ${TEST_TMP_DIR}/${SPHERE_CROPPED_FILE_NAME}.nii -i DATA{${SPHERE_FILE_NAME}.nii}
+  )
+
+ExternalData_Add_Target(Test_itkBoundingBox)
+
+set_tests_properties(Test_itkBoundingBox PROPERTIES DEPENDS "Test_itkSphereImageGenerator")
+
+#------------------------------------------------------------------------------
+# Check crop comparison
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkBoundingBoxCompare
+  NAME Test_itkBoundingBoxCompare
+  COMMAND  ${IMAGE_COMPARE} -a ${TEST_TMP_DIR}/${SPHERE_CROPPED_FILE_NAME}.nii -b DATA{${SPHERE_CROPPED_FILE_NAME}.nii}
+  )
+
+ExternalData_Add_Target(Test_itkBoundingBoxCompare)
+set_tests_properties(Test_itkBoundingBoxCompare PROPERTIES DEPENDS "Test_itkSphereImageGenerator;Test_itkBoundingBox")
