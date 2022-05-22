@@ -51,7 +51,6 @@ if(NOT DEFINED ${PROJECT_NAME}_VERSION_PATCH)
 endif()
 project(${PROJECT_NAME} VERSION "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}")
 
-
 #-----------------------------------------------------------------------------
 # Superbuild Option - Enabled by default
 #-----------------------------------------------------------------------------
@@ -134,7 +133,9 @@ set(SPHERE_GENERATOR ${itkSphereImageGenerator_DIR}/itkSphereImageGenerator)
 set(MAURER_OPERATOR ${itkMaurerDistance_DIR}/itkMaurerDistance)
 set(BASE_OPERATOR ${itkDistanceImageFilter_DIR}/itkDistanceImageFilter)
 set(RADIAL_DISTANCE ${itkRadialDistance_DIR}/itkRadialDistance)
-set(IMAGE_COMPARE ${itkImageCompare_DIR}/itkImageCompare)
+set(COMPARE_OPERATOR ${itkImageCompare_DIR}/itkImageCompare)
+set(BOUNDINGBOX_OPERATOR ${itkBoundingBox_DIR}/itkBoundingBox)
+set(RESAMPLE_OPERATOR ${itkImageResample_DIR}/itkImageResample)
 
 configure_file(CMake/environment.sh.in scripts/environment.sh @ONLY)
 
@@ -159,4 +160,3 @@ file(INSTALL ${SCRIPTS}
   PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ
   DESTINATION "${CMAKE_BINARY_DIR}/scripts/"
   )
-

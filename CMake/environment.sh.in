@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 
+# ------------------------------------------------------------------------------
+# Operators
+# ------------------------------------------------------------------------------
 SPHERE_GENERATOR="@SPHERE_GENERATOR@"
 MAURER_OPERATOR="@MAURER_OPERATOR@"
+RADIAL_OPERATOR="@RADIAL_OPERATOR@"
 BASE_OPERATOR="@BASE_OPERATOR@"
+COMPARE_OPERATOR="@COMPARE_OPERATOR@"
+BOUNDINGBOX_OPERATOR="@BOUNDINGBOX_OPERATOR@"
+RESAMPLE_OPERATOR="@RESAMPLE_OPERATOR@"
+
+# ------------------------------------------------------------------------------
+# Directories
+# ------------------------------------------------------------------------------
 TEST_TMP_DIR="@TEST_TMP_DIR@"
