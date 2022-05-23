@@ -134,6 +134,7 @@ set(MAURER_OPERATOR ${itkMaurerDistance_DIR}/itkMaurerDistance)
 set(BASE_OPERATOR ${itkDistanceImageFilter_DIR}/itkDistanceImageFilter)
 set(RADIAL_DISTANCE ${itkRadialDistance_DIR}/itkRadialDistance)
 set(COMPARE_OPERATOR ${itkImageCompare_DIR}/itkImageCompare)
+set(CONVERT_OPERATOR ${itkImageConvert_DIR}/itkImageConvert)
 set(BOUNDINGBOX_OPERATOR ${itkBoundingBox_DIR}/itkBoundingBox)
 set(RESAMPLE_OPERATOR ${itkImageResample_DIR}/itkImageResample)
 

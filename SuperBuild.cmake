@@ -57,6 +57,7 @@ set(itkMaurerDistance_EXTERNAL_NAME itkMaurerDistance)
 set(itkImageCompare_EXTERNAL_NAME itkImageCompare)
 set(itkImageResample_EXTERNAL_NAME itkImageResample)
 set(itkBoundingBox_EXTERNAL_NAME itkBoundingBox)
+set(itkImageConvert_EXTERNAL_NAME itkImageConvert)
 set(itkDistanceImageFilter_EXTERNAL_NAME itkDistanceImageFilter)
 set(ITK_EXTERNAL_NAME ITK)
 
@@ -67,6 +68,7 @@ set(${PROJECT_NAME}_DEPENDENCIES
   ${itkImageResample_EXTERNAL_NAME}
   ${itkBoundingBox_EXTERNAL_NAME}
   ${itkRadialDistance_EXTERNAL_NAME}
+  ${itkImageConvert_EXTERNAL_NAME}
   ${itkSphereImageGenerator_EXTERNAL_NAME}
   ${itkDistanceImageFilter_EXTERNAL_NAME}
   )
