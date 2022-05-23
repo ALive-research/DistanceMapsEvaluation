@@ -6,6 +6,7 @@ set(SPHERE_MAURER_FILE_NAME "sphere_101_1_20_maurer")
 set(SPHERE_BASE_FILE_NAME "sphere_101_1_20_base")
 set(SPHERE_CROPPED_FILE_NAME "sphere_101_1_20_cropped")
 set(SPHERE_RADIAL_FILE_NAME "sphere_101_1_20_radial")
+set(SPHERE_NRRD_FLOAT_FILE_NAME "sphere_101_1_20_float")
 
 #------------------------------------------------------------------------------
 # Generate a sphere
@@ -22,7 +23,7 @@ ExternalData_Add_Target(Test_itkSphereImageGenerator)
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkSphereCompare
   NAME Test_itkSphereCompare
-  COMMAND  ${IMAGE_COMPARE} -a ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -b DATA{${SPHERE_FILE_NAME}.nii}
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -b DATA{${SPHERE_FILE_NAME}.nii}
   )
 
 ExternalData_Add_Target(Test_itkSphereCompare)
@@ -58,7 +59,7 @@ set_tests_properties(Test_itkDistanceImageFilter PROPERTIES DEPENDS "Test_itkSph
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkSphereMaurerBaseCompare
   NAME Test_itkSphereMaurerBaseCompare
-  COMMAND  ${IMAGE_COMPARE} -a ${TEST_TMP_DIR}/${SPHERE_MAURER_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_MAURER_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii
   )
 
 ExternalData_Add_Target(Test_itkSphereMaurerBaseCompare)
@@ -80,7 +81,7 @@ ExternalData_Add_Target(Test_itkRadialDistance)
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkRadialBaseDistanceCompare
   NAME Test_itkRadialBaseDistanceCompare
-  COMMAND  ${IMAGE_COMPARE} -a ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii -k ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o -m 1.0 -M 1.0 -s 1.0 -e 1.0
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii -k ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o -m 1.0 -M 1.0 -s 1.0 -e 1.0
   )
 
 ExternalData_Add_Target(Test_itkRadialBaseDistanceCompare)
@@ -91,7 +92,7 @@ set_tests_properties(Test_itkRadialBaseDistanceCompare PROPERTIES DEPENDS "Test_
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkRadialMaurerDistanceCompare
   NAME Test_itkRadialMaurerDistanceCompare
-  COMMAND  ${IMAGE_COMPARE} -a ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii -k ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o -m 1.0 -M 1.0 -s 1.0 -e 1.0
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii -k ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o -m 1.0 -M 1.0 -s 1.0 -e 1.0
   )
 
 ExternalData_Add_Target(Test_itkRadialMaurerDistanceCompare)
@@ -102,7 +103,7 @@ set_tests_properties(Test_itkRadialBaseDistanceCompare PROPERTIES DEPENDS "Test_
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkBoundingBox
   NAME Test_itkBoundingBox
-  COMMAND  ${BOUNDING_BOX} -o ${TEST_TMP_DIR}/${SPHERE_CROPPED_FILE_NAME}.nii -i DATA{${SPHERE_FILE_NAME}.nii}
+  COMMAND  ${BOUNDINGBOX_OPERATOR} -o ${TEST_TMP_DIR}/${SPHERE_CROPPED_FILE_NAME}.nii -i DATA{${SPHERE_FILE_NAME}.nii}
   )
 
 ExternalData_Add_Target(Test_itkBoundingBox)
@@ -114,8 +115,31 @@ set_tests_properties(Test_itkBoundingBox PROPERTIES DEPENDS "Test_itkSphereImage
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkBoundingBoxCompare
   NAME Test_itkBoundingBoxCompare
-  COMMAND  ${IMAGE_COMPARE} -a ${TEST_TMP_DIR}/${SPHERE_CROPPED_FILE_NAME}.nii -b DATA{${SPHERE_CROPPED_FILE_NAME}.nii}
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_CROPPED_FILE_NAME}.nii -b DATA{${SPHERE_CROPPED_FILE_NAME}.nii}
   )
 
 ExternalData_Add_Target(Test_itkBoundingBoxCompare)
-set_tests_properties(Test_itkBoundingBoxCompare PROPERTIES DEPENDS "Test_itkSphereImageGenerator;Test_itkBoundingBox")
+set_tests_properties(Test_itkBoundingBoxCompare PROPERTIES DEPENDS "Test_itkBoundingBox")
+
+#------------------------------------------------------------------------------
+# Convert unsigned short (.nii) to float (.nrrd)
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkImageConvert
+  NAME Test_itkImageConvert
+  COMMAND  ${CONVERT_OPERATOR} -o ${TEST_TMP_DIR}/${SPHERE_NRRD_FLOAT_FILE_NAME}.nrrd -i DATA{${SPHERE_FILE_NAME}.nii} -d 2
+  )
+
+ExternalData_Add_Target(Test_itkImageConvert)
+
+set_tests_properties(Test_itkImageConvert PROPERTIES DEPENDS "Test_itkSphereImageGenerator")
+
+#------------------------------------------------------------------------------
+# Check conversion comparison
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkConversionCompare
+  NAME Test_itkConversionCompare
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_NRRD_FLOAT_FILE_NAME}.nrrd -b DATA{${SPHERE_NRRD_FLOAT_FILE_NAME}.nrrd}
+  )
+
+ExternalData_Add_Target(Test_itkConversionCompare)
+set_tests_properties(Test_itkConversionCompare PROPERTIES DEPENDS "Test_itkImageConvert")
