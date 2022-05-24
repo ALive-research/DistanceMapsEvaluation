@@ -7,6 +7,7 @@ set(SPHERE_BASE_FILE_NAME "sphere_101_1_20_base")
 set(SPHERE_CROPPED_FILE_NAME "sphere_101_1_20_cropped")
 set(SPHERE_RADIAL_FILE_NAME "sphere_101_1_20_radial")
 set(SPHERE_NRRD_FLOAT_FILE_NAME "sphere_101_1_20_float")
+set(HEPATIC_VESSELS_FILE_NAME "hepaticvessel_151")
 
 #------------------------------------------------------------------------------
 # Generate a sphere
@@ -143,3 +144,24 @@ ExternalData_Add_Test(Test_itkConversionCompare
 
 ExternalData_Add_Target(Test_itkConversionCompare)
 set_tests_properties(Test_itkConversionCompare PROPERTIES DEPENDS "Test_itkImageConvert")
+
+#------------------------------------------------------------------------------
+# Extract labels
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkLabelExtract
+  NAME Test_itkLabelExtract
+  COMMAND  ${EXTRACT_OPERATOR} -i DATA{${HEPATIC_VESSELS_FILE_NAME}.nii.gz} -l 1 -l 2 -L 3 -o ${TEST_TMP_DIR}/${HEPATIC_VESSELS_FILE_NAME}_unified.nii
+  )
+
+ExternalData_Add_Target(Test_itkLabelExtract)
+
+#------------------------------------------------------------------------------
+# Check conversion comparison
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkLabelExtractionCheck
+  NAME Test_itkLabelExtractionCheck
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${HEPATIC_VESSELS_FILE_NAME}_unified.nii -b DATA{${HEPATIC_VESSELS_FILE_NAME}_unified.nii}
+  )
+
+ExternalData_Add_Target(Test_itkLabelExtractionCheck)
+set_tests_properties(Test_itkConversionCompare PROPERTIES DEPENDS "Test_itkLabelExtract")

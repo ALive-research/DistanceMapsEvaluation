@@ -137,6 +137,7 @@ set(COMPARE_OPERATOR ${itkImageCompare_DIR}/itkImageCompare)
 set(CONVERT_OPERATOR ${itkImageConvert_DIR}/itkImageConvert)
 set(BOUNDINGBOX_OPERATOR ${itkBoundingBox_DIR}/itkBoundingBox)
 set(RESAMPLE_OPERATOR ${itkImageResample_DIR}/itkImageResample)
+set(EXTRACT_OPERATOR ${itkLabelExtract_DIR}/itkLabelExtract)
 
 configure_file(CMake/environment.sh.in scripts/environment.sh @ONLY)
 
