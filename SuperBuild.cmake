@@ -61,9 +61,11 @@ set(itkImageConvert_EXTERNAL_NAME itkImageConvert)
 set(itkLabelExtract_EXTERNAL_NAME itkLabelExtract)
 set(itkDistanceImageFilter_EXTERNAL_NAME itkDistanceImageFilter)
 set(ITK_EXTERNAL_NAME ITK)
+set(VTK_EXTERNAL_NAME VTK)
 
 set(${PROJECT_NAME}_DEPENDENCIES
   ${ITK_EXTERNAL_NAME}
+  ${VTK_EXTERNAL_NAME}
   ${itkMaurerDistance_EXTERNAL_NAME}
   ${itkImageCompare_EXTERNAL_NAME}
   ${itkImageResample_EXTERNAL_NAME}
