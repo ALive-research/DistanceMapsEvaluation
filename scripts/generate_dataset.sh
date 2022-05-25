@@ -15,8 +15,6 @@ LIVER_DATASET=$(find $2 -type f)
 VESSELS_DATASET=$(find $3 -type f)
 ALL_DATASET=$(find $2 $3 -type f)
 
-set -eux
-
 # Process parenchyma
 declare -i livernr=0
 for i in ${LIVER_DATASET}; do
