@@ -41,7 +41,14 @@ endif()
 #-----------------------------------------------------------------------------
 # Pre-requisites
 #-----------------------------------------------------------------------------
+find_program(CURL_EXECUTABLE curl REQUIRED)
+if(CURL_EXECUTABLE-NOTFOUND)
+  message(FATAL_ERROR "error: Install curl and try to re-configure")
+endif()
+mark_as_superbuild(CURL_EXECUTABLE)
+
 find_package(Git REQUIRED)
+mark_as_superbuild(GIT_EXECUTABLE)
 if(NOT GIT_FOUND)
   message(FATAL_ERROR "error: Install Git and try to re-configure")
 endif()
