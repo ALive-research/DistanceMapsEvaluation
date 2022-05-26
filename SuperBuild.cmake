@@ -62,6 +62,7 @@ set(itkLabelExtract_EXTERNAL_NAME itkLabelExtract)
 set(itkDistanceImageFilter_EXTERNAL_NAME itkDistanceImageFilter)
 set(ITK_EXTERNAL_NAME ITK)
 set(VTK_EXTERNAL_NAME VTK)
+set(Dataset_EXTERNAL_NAME Dataset)
 
 set(${PROJECT_NAME}_DEPENDENCIES
   ${ITK_EXTERNAL_NAME}
@@ -75,6 +76,7 @@ set(${PROJECT_NAME}_DEPENDENCIES
   ${itkLabelExtract_EXTERNAL_NAME}
   ${itkSphereImageGenerator_EXTERNAL_NAME}
   ${itkDistanceImageFilter_EXTERNAL_NAME}
+  ${Dataset_EXTERNAL_NAME}
   )
 #------------------------------------------------------------------------------
 # REsectionSegmentsExperiment_ADDITIONAL_PROJECTS
