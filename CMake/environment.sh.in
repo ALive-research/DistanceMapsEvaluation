@@ -22,3 +22,37 @@ LABELEXTRACT_OPERATOR="@LABELEXTRACT_OPERATOR@"
 # Directories
 # ------------------------------------------------------------------------------
 TEST_TMP_DIR="@TEST_TMP_DIR@"
+Dataset_DIR="@Dataset_DIR@"
+Dataset_BINARY_DIR="@Dataset_BINARY_DIR@"
+
+# ------------------------------------------------------------------------------
+# Directories
+# ------------------------------------------------------------------------------
+
+## Data URL Replacement
+#
+# This function will return the url of a given dataset
+#
+function data_url_replace()
+{
+    echo "https://github.com/ALive-research/DistanceMapsEvaluationDataset/releases/download/SHA256/${1}"
+}
+
+## Data
+#
+# This function checks whether an item of the datasets exists. If so, returns the uri of the file. Otherwise, it tries to downlaod it and returns
+# the URI to the file
+#
+function data()
+{
+    filename=${1%.*}
+
+    # The binary file exists
+    [ -f ${Dataset_BINARY_DIR}/${filename} ] &&\
+        echo ${Dataset_BINARY_DIR}/${filename} && return
+
+    # The binary file does not exist
+    [ -f ${Dataset_DIR}/${filename}.sha256 ] &&\
+        ${CURL} -L $(data_url_replace $(cat ${Dataset_DIR}/${filename}.sha256)) > ${Dataset_BINARY_DIR}/${filename} &&\
+        echo ${Dataset_BINARY_DIR}/${filename}
+}
