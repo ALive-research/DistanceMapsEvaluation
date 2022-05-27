@@ -28,16 +28,6 @@ list(APPEND EXTERNAL_PROJECT_ADDITIONAL_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/SuperBu
 include(ExternalProject)
 include(ExternalProjectDependency)
 
-#------------------------------------------------------------------------------
-# Testing
-#------------------------------------------------------------------------------
-option(BUILD_TESTING "Build testing" OFF)
-mark_as_superbuild(BUILD_TESTING)
-if(BUILD_TESTING)
-  include(CTest)
-  add_subdirectory(Testing)
-endif()
-
 #-----------------------------------------------------------------------------
 # Pre-requisites
 #-----------------------------------------------------------------------------
@@ -159,6 +149,16 @@ set(LABELEXTRACT_OPERATOR ${itkLabelExtract_DIR}/itkLabelExtract)
 configure_file(CMake/environment.sh.in scripts/environment.sh @ONLY)
 
 file(MAKE_DIRECTORY ${TEST_TMP_DIR})
+
+#------------------------------------------------------------------------------
+# Testing
+#------------------------------------------------------------------------------
+option(BUILD_TESTING "Build testing" OFF)
+mark_as_superbuild(BUILD_TESTING)
+if(BUILD_TESTING)
+  include(CTest)
+  add_subdirectory(Testing)
+endif()
 
 #------------------------------------------------------------------------------
 # Move over the scripts

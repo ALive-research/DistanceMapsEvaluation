@@ -72,7 +72,7 @@ set_tests_properties(Test_itkSphereMaurerBaseCompare PROPERTIES DEPENDS "Test_it
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkRadialDistance
   NAME Test_itkRadialDistance
-  COMMAND  ${RADIAL_DISTANCE} -z 101 -s 1 -r 20 -o ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii
+  COMMAND  ${RADIAL_OPERATOR} -z 101 -s 1 -r 20 -o ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii
   )
 
 ExternalData_Add_Target(Test_itkRadialDistance)
@@ -150,7 +150,7 @@ set_tests_properties(Test_itkConversionCompare PROPERTIES DEPENDS "Test_itkImage
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkLabelExtract
   NAME Test_itkLabelExtract
-  COMMAND  ${EXTRACT_OPERATOR} -i DATA{${HEPATIC_VESSELS_FILE_NAME}.nii.gz} -l 1 -l 2 -L 3 -o ${TEST_TMP_DIR}/${HEPATIC_VESSELS_FILE_NAME}_unified.nii
+  COMMAND  ${LABELEXTRACT_OPERATOR} -i DATA{${HEPATIC_VESSELS_FILE_NAME}.nii.gz} -l 1 -l 2 -L 3 -o ${TEST_TMP_DIR}/${HEPATIC_VESSELS_FILE_NAME}_unified.nii
   )
 
 ExternalData_Add_Target(Test_itkLabelExtract)
