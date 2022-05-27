@@ -165,3 +165,25 @@ ExternalData_Add_Test(Test_itkLabelExtractionCheck
 
 ExternalData_Add_Target(Test_itkLabelExtractionCheck)
 set_tests_properties(Test_itkConversionCompare PROPERTIES DEPENDS "Test_itkLabelExtract")
+
+#------------------------------------------------------------------------------
+# Crop sphere image
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkImageCrop
+  NAME Test_itkImageCrop
+  COMMAND  ${CROP_OPERATOR} -i ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -x 31 -y 31 -z 31 -u 40 -v 40 -w 40 -o ${TEST_TMP_DIR}/${SPHERE_CROPPED_FILE_NAME}_2.nii
+  )
+
+ExternalData_Add_Target(Test_itkImageCrop)
+set_tests_properties(Test_itkImageCrop PROPERTIES DEPENDS "Test_itkSphereImageGenerator")
+
+#------------------------------------------------------------------------------
+# Check conversion comparison
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkImageCropCheck
+  NAME Test_itkImageCropCheck
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_CROPPED_FILE_NAME}_2.nii -b ${TEST_TMP_DIR}/${SPHERE_CROPPED_FILE_NAME}.nii
+  )
+
+ExternalData_Add_Target(Test_itkImageCropCheck)
+set_tests_properties(Test_itkImageCropCheck PROPERTIES DEPENDS "Test_itkImageCrop;Test_itkBoundingBox")
