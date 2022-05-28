@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------
 set(SPHERE_FILE_NAME "sphere_101_1_20")
 set(SPHERE_MAURER_FILE_NAME "sphere_101_1_20_maurer")
-set(SPHERE_BASE_FILE_NAME "sphere_101_1_20_base")
+set(SPHERE_DISTANCE_FILE_NAME "sphere_101_1_20_base")
 set(SPHERE_CROPPED_FILE_NAME "sphere_101_1_20_cropped")
 set(SPHERE_RADIAL_FILE_NAME "sphere_101_1_20_radial")
 set(SPHERE_NRRD_FLOAT_FILE_NAME "sphere_101_1_20_float")
@@ -48,7 +48,7 @@ set_tests_properties(Test_itkMaurerDistance PROPERTIES DEPENDS "Test_itkSphereIm
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkDistanceImageFilter
   NAME Test_itkDistanceImageFilter
-  COMMAND  ${BASE_OPERATOR} -i ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii
+  COMMAND  ${DISTANCE_OPERATOR} -i ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o ${TEST_TMP_DIR}/${SPHERE_DISTANCE_FILE_NAME}.nii
   )
 
 ExternalData_Add_Target(Test_itkDistanceImageFilter)
@@ -60,7 +60,7 @@ set_tests_properties(Test_itkDistanceImageFilter PROPERTIES DEPENDS "Test_itkSph
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkSphereMaurerBaseCompare
   NAME Test_itkSphereMaurerBaseCompare
-  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_MAURER_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_MAURER_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_DISTANCE_FILE_NAME}.nii
   )
 
 ExternalData_Add_Target(Test_itkSphereMaurerBaseCompare)
@@ -82,7 +82,7 @@ ExternalData_Add_Target(Test_itkRadialDistance)
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkRadialBaseDistanceCompare
   NAME Test_itkRadialBaseDistanceCompare
-  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii -k ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o -m 1.0 -M 1.0 -s 1.0 -e 1.0
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_DISTANCE_FILE_NAME}.nii -k ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o -m 1.0 -M 1.0 -s 1.0 -e 1.0
   )
 
 ExternalData_Add_Target(Test_itkRadialBaseDistanceCompare)
@@ -93,7 +93,7 @@ set_tests_properties(Test_itkRadialBaseDistanceCompare PROPERTIES DEPENDS "Test_
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkRadialMaurerDistanceCompare
   NAME Test_itkRadialMaurerDistanceCompare
-  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_BASE_FILE_NAME}.nii -k ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o -m 1.0 -M 1.0 -s 1.0 -e 1.0
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_RADIAL_FILE_NAME}.nii -b ${TEST_TMP_DIR}/${SPHERE_DISTANCE_FILE_NAME}.nii -k ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o -m 1.0 -M 1.0 -s 1.0 -e 1.0
   )
 
 ExternalData_Add_Target(Test_itkRadialMaurerDistanceCompare)

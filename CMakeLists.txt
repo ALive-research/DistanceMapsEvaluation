@@ -138,7 +138,7 @@ set(ExternalData_URL_TEMPLATES "https://github.com/ALive-research/ALiveResearchT
 set(TEST_TMP_DIR ${CMAKE_BINARY_DIR}/TestTemp)
 set(SPHERE_GENERATOR ${itkSphereImageGenerator_DIR}/itkSphereImageGenerator)
 set(MAURER_OPERATOR ${itkMaurerDistance_DIR}/itkMaurerDistance)
-set(BASE_OPERATOR ${itkDistanceImageFilter_DIR}/itkDistanceImageFilter)
+set(DISTANCE_OPERATOR ${itkDistanceImageFilter_DIR}/itkDistanceImageFilter)
 set(RADIAL_OPERATOR ${itkRadialDistance_DIR}/itkRadialDistance)
 set(COMPARE_OPERATOR ${itkImageCompare_DIR}/itkImageCompare)
 set(CONVERT_OPERATOR ${itkImageConvert_DIR}/itkImageConvert)
