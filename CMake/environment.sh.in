@@ -11,7 +11,7 @@ CURL="@CURL_EXECUTABLE@"
 SPHERE_GENERATOR="@SPHERE_GENERATOR@"
 MAURER_OPERATOR="@MAURER_OPERATOR@"
 RADIAL_OPERATOR="@RADIAL_OPERATOR@"
-BASE_OPERATOR="@BASE_OPERATOR@"
+DISTANCE_OPERATOR="@BASE_OPERATOR@"
 COMPARE_OPERATOR="@COMPARE_OPERATOR@"
 BOUNDINGBOX_OPERATOR="@BOUNDINGBOX_OPERATOR@"
 CROP_OPERATOR="@CROP_OPERATOR@"
@@ -55,6 +55,6 @@ function data()
 
     # The binary file does not exist
     [ -f ${Dataset_DIR}/${filename}.sha256 ] &&\
-        ${CURL} -L $(data_url_replace $(cat ${Dataset_DIR}/${filename}.sha256)) > ${Dataset_BINARY_DIR}/${filename} &&\
+        ${CURL} --progress-bar -L $(data_url_replace $(cat ${Dataset_DIR}/${filename}.sha256)) > ${Dataset_BINARY_DIR}/${filename} &&\
         echo ${Dataset_BINARY_DIR}/${filename}
 }
