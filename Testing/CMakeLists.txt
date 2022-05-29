@@ -5,6 +5,7 @@ set(SPHERE_FILE_NAME "sphere_101_1_20")
 set(SPHERE_MAURER_FILE_NAME "sphere_101_1_20_maurer")
 set(SPHERE_DISTANCE_FILE_NAME "sphere_101_1_20_base")
 set(SPHERE_CROPPED_FILE_NAME "sphere_101_1_20_cropped")
+set(SPHERE_PADDED_FILE_NAME "sphere_141_1_20")
 set(SPHERE_RADIAL_FILE_NAME "sphere_101_1_20_radial")
 set(SPHERE_NRRD_FLOAT_FILE_NAME "sphere_101_1_20_float")
 set(HEPATIC_VESSELS_FILE_NAME "hepaticvessel_151")
@@ -187,3 +188,25 @@ ExternalData_Add_Test(Test_itkImageCropCheck
 
 ExternalData_Add_Target(Test_itkImageCropCheck)
 set_tests_properties(Test_itkImageCropCheck PROPERTIES DEPENDS "Test_itkImageCrop;Test_itkBoundingBox")
+
+#------------------------------------------------------------------------------
+# Pad sphere image
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkImagePad
+  NAME Test_itkImagePad
+  COMMAND  ${PAD_OPERATOR} -i ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -p 20 -v 0 -o ${TEST_TMP_DIR}/${SPHERE_PADDED_FILE_NAME}.nii
+  )
+
+ExternalData_Add_Target(Test_itkImagePad)
+set_tests_properties(Test_itkImagePad PROPERTIES DEPENDS "Test_itkSphereImageGenerator")
+
+#------------------------------------------------------------------------------
+# Check conversion comparison
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkImagePadCheck
+  NAME Test_itkImagePadCheck
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${SPHERE_PADDED_FILE_NAME}.nii -b DATA{${SPHERE_PADDED_FILE_NAME}.nii}
+  )
+
+ExternalData_Add_Target(Test_itkImagePadCheck)
+set_tests_properties(Test_itkImagePadCheck PROPERTIES DEPENDS "Test_itkImagePad")
