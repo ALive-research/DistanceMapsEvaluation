@@ -144,6 +144,7 @@ set(COMPARE_OPERATOR ${itkImageCompare_DIR}/itkImageCompare)
 set(CONVERT_OPERATOR ${itkImageConvert_DIR}/itkImageConvert)
 set(BOUNDINGBOX_OPERATOR ${itkBoundingBox_DIR}/itkBoundingBox)
 set(CROP_OPERATOR ${itkImageCrop_DIR}/itkImageCrop)
+set(PAD_OPERATOR ${itkImagePad_DIR}/itkImagePad)
 set(RESAMPLE_OPERATOR ${itkImageResample_DIR}/itkImageResample)
 set(LABELEXTRACT_OPERATOR ${itkLabelExtract_DIR}/itkLabelExtract)
 
