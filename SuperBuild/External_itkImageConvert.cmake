@@ -17,7 +17,7 @@ ExternalProject_SetIfNotDefined(
 
 ExternalProject_SetIfNotDefined(
   ${PROJECT_NAME}_${proj}_GIT_TAG
-  "b9559cf3a3d2dd8909ab0303ee0b8e0697f790a0"
+  "60c957035962eb2e95fff964aae681f1458546cf"
   QUIET
   )
 
