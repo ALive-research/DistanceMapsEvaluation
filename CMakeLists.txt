@@ -59,6 +59,12 @@ endif()
 project(${PROJECT_NAME} VERSION "${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}")
 
 #-----------------------------------------------------------------------------
+# Options and variables
+#-----------------------------------------------------------------------------
+option(BUILD_TESTING "Build testing" OFF)
+mark_as_superbuild(BUILD_TESTING)
+
+#-----------------------------------------------------------------------------
 # Superbuild Option - Enabled by default
 #-----------------------------------------------------------------------------
 option(${PROJECT_NAME}_SUPERBUILD "Build ${PROJECT_NAME} and the projects it depends on." ON)
@@ -155,8 +161,6 @@ file(MAKE_DIRECTORY ${TEST_TMP_DIR})
 #------------------------------------------------------------------------------
 # Testing
 #------------------------------------------------------------------------------
-option(BUILD_TESTING "Build testing" OFF)
-mark_as_superbuild(BUILD_TESTING)
 if(BUILD_TESTING)
   include(CTest)
   add_subdirectory(Testing)
