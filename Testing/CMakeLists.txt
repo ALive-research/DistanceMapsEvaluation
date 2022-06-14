@@ -9,6 +9,7 @@ set(SPHERE_PADDED_FILE_NAME "sphere_141_1_20")
 set(SPHERE_RADIAL_FILE_NAME "sphere_101_1_20_radial")
 set(SPHERE_NRRD_FLOAT_FILE_NAME "sphere_101_1_20_float")
 set(HEPATIC_VESSELS_FILE_NAME "hepaticvessel_151")
+set(LIVER_RESAMPLED_100_FILE_NAME "liver_000_resampled_100")
 
 #------------------------------------------------------------------------------
 # Generate a sphere
@@ -33,7 +34,7 @@ ExternalData_Add_Target(Test_itkSphereCompare)
 set_tests_properties(Test_itkSphereCompare PROPERTIES DEPENDS "Test_itkSphereImageGenerator")
 
 #------------------------------------------------------------------------------
-# Test Maurer distance
+# Test Maurer distance (I)
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkMaurerDistance
   NAME Test_itkMaurerDistance
@@ -43,6 +44,16 @@ ExternalData_Add_Test(Test_itkMaurerDistance
 ExternalData_Add_Target(Test_itkMaurerDistance)
 
 set_tests_properties(Test_itkMaurerDistance PROPERTIES DEPENDS "Test_itkSphereImageGenerator")
+
+#------------------------------------------------------------------------------
+# Test Maurer distance (II)
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkMaurerDistance2
+  NAME Test_itkMaurerDistance2
+  COMMAND  ${MAURER_OPERATOR} -i DATA{${LIVER_RESAMPLED_100_FILE_NAME}.nrrd} -o ${TEST_TMP_DIR}/${LIVER_RESAMPLED_100_FILE_NAME}_maurer.nrrd
+  )
+
+ExternalData_Add_Target(Test_itkMaurerDistance2)
 
 #------------------------------------------------------------------------------
 # Test Base distance
@@ -57,6 +68,16 @@ ExternalData_Add_Target(Test_itkDistanceImageFilter)
 set_tests_properties(Test_itkDistanceImageFilter PROPERTIES DEPENDS "Test_itkSphereImageGenerator")
 
 #------------------------------------------------------------------------------
+# Test Base distance (II)
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkDistanceImageFilter2
+  NAME Test_itkDistanceImageFilter2
+  COMMAND  ${DISTANCE_OPERATOR} -i DATA{${LIVER_RESAMPLED_100_FILE_NAME}.nrrd} -o ${TEST_TMP_DIR}/${LIVER_RESAMPLED_100_FILE_NAME}_bf.nrrd
+  )
+
+ExternalData_Add_Target(Test_itkDistanceImageFilter2)
+
+#------------------------------------------------------------------------------
 # Compare Maurer and base
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkSphereMaurerBaseCompare
@@ -66,7 +87,19 @@ ExternalData_Add_Test(Test_itkSphereMaurerBaseCompare
 
 ExternalData_Add_Target(Test_itkSphereMaurerBaseCompare)
 
-set_tests_properties(Test_itkSphereMaurerBaseCompare PROPERTIES DEPENDS "Test_itkSphereImageGenerator")
+set_tests_properties(Test_itkSphereMaurerBaseCompare PROPERTIES DEPENDS "Test_itkDistanceImageFilter;Test_itkMaurerDistance")
+
+#------------------------------------------------------------------------------
+# Compare Maurer and base
+#------------------------------------------------------------------------------
+ExternalData_Add_Test(Test_itkSphereMaurerBaseCompare2
+  NAME Test_itkSphereMaurerBaseCompare2
+  COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${LIVER_RESAMPLED_100_FILE_NAME}_bf.nrrd -b ${TEST_TMP_DIR}/${LIVER_RESAMPLED_100_FILE_NAME}_maurer.nrrd
+  )
+
+ExternalData_Add_Target(Test_itkSphereMaurerBaseCompare2)
+
+set_tests_properties(Test_itkSphereMaurerBaseCompare PROPERTIES DEPENDS "Test_itkDistanceImageFilter2;Test_itkMaurerDistance2")
 
 #------------------------------------------------------------------------------
 # Generate radial distance image
