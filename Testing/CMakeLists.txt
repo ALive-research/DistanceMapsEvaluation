@@ -60,7 +60,7 @@ ExternalData_Add_Target(Test_itkMaurerDistance2)
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkDistanceImageFilter
   NAME Test_itkDistanceImageFilter
-  COMMAND  ${DISTANCE_OPERATOR} -i ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o ${TEST_TMP_DIR}/${SPHERE_DISTANCE_FILE_NAME}.nii
+  COMMAND  ${DISTANCE_OPERATOR} -i ${TEST_TMP_DIR}/${SPHERE_FILE_NAME}.nii -o ${TEST_TMP_DIR}/${SPHERE_DISTANCE_FILE_NAME}.nii -d 0 -u
   )
 
 ExternalData_Add_Target(Test_itkDistanceImageFilter)
@@ -72,7 +72,7 @@ set_tests_properties(Test_itkDistanceImageFilter PROPERTIES DEPENDS "Test_itkSph
 #------------------------------------------------------------------------------
 ExternalData_Add_Test(Test_itkDistanceImageFilter2
   NAME Test_itkDistanceImageFilter2
-  COMMAND  ${DISTANCE_OPERATOR} -i DATA{${LIVER_RESAMPLED_100_FILE_NAME}.nrrd} -o ${TEST_TMP_DIR}/${LIVER_RESAMPLED_100_FILE_NAME}_bf.nrrd
+  COMMAND  ${DISTANCE_OPERATOR} -i DATA{${LIVER_RESAMPLED_100_FILE_NAME}.nrrd} -o ${TEST_TMP_DIR}/${LIVER_RESAMPLED_100_FILE_NAME}_bf.nrrd -d 0 -u
   )
 
 ExternalData_Add_Target(Test_itkDistanceImageFilter2)
