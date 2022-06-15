@@ -77,7 +77,7 @@ do
     echo -e "\t Computing bounding box for liver image"
 
     # Compute bounding box and crop the liver image
-    bounding_box=$(${BOUNDINGBOX_OPERATOR} -i $liver -o ${liver%.*}_cropped.nrrd)
+    bounding_box=$(${BOUNDINGBOX_OPERATOR} -i $liver -o ${liver%.*}_cropped.nrrd -c)
     # NOTE: Threre should be a way to reduce these to a single line, or at least to a single awk call
     offset_x=$(echo ${bounding_box} | awk -F': ' '{print $4}' | awk -F'[][]' '{print $2}'| awk -F', ' '{print $1}')
     offset_y=$(echo ${bounding_box} | awk -F': ' '{print $4}' | awk -F'[][]' '{print $2}'| awk -F', ' '{print $2}')
@@ -88,14 +88,14 @@ do
 
     # Crop the tumor image
     echo -e "\t Cropping tumor image"
-    ${CROP_OPERATOR} -i $tumor -x $offset_x -y $offset_y -z $offset_z -u $bb_size_x -v $bb_size_y -w $bb_size_z -o $tumor_cropped
+    ${CROP_OPERATOR} -i $tumor -x $offset_x -y $offset_y -z $offset_z -u $bb_size_x -v $bb_size_y -w $bb_size_z -o  -c $tumor_cropped
 
     # Apply Maurer
     echo -e "\t Computing Maure distance (liver)"
-    liver_maurer_t=$(${MAURER_OPERATOR} -i $liver -o $liver_maurer | awk -F':' '{print $2}')
+    liver_maurer_t=$(${MAURER_OPERATOR} -i $liver -o $liver_maurer -c | awk -F':' '{print $2}')
 
     echo -e "\t Computing Maure distance (tumor)"
-    tumor_maurer_t=$(${MAURER_OPERATOR} -i $tumor_cropped -o $tumor_cropped_maurer | awk -F':' '{print $2}')
+    tumor_maurer_t=$(${MAURER_OPERATOR} -i $tumor_cropped -o $tumor_cropped_maurer -c | awk -F':' '{print $2}')
 
     # Apply Brute-force
     # liver_bf_t=$(${DISTANCE_OPERATOR} -i $liver -o $liver_bf| awk -F':' '{print $2}')
@@ -108,21 +108,21 @@ do
     do
         echo -e "\t Downsampling maurer distance (liver -- ${i})"
         liver_maurer_downsampled=${liver%.*}_maurer_downsampled_${i}.nrrd
-        t=$(${RESAMPLE_OPERATOR} -i ${liver_maurer} -o ${liver_maurer_downsampled} -d 2 -l 1 -x $i -y $i -z $i)
+        t=$(${RESAMPLE_OPERATOR} -i ${liver_maurer} -o ${liver_maurer_downsampled} -d 2 -l 1 -x $i -y $i -z $i  -c | cut -d : -f 2)
         LIVER_CSV_ROW_RESAMPLE+=",${t}"
 
         echo -e "\t Downsampling maurer distance (tumor -- ${i})"
         tumor_cropped_maurer_downsampled=${tumor%.*}_maurer_downsampled_${i}.nrrd
-        t=$(${RESAMPLE_OPERATOR} -i ${tumor_cropped_maurer} -o ${tumor_cropped_maurer_downsampled} -d 2 -l 1 -x $i -y $i -z $i)
+        t=$(${RESAMPLE_OPERATOR} -i ${tumor_cropped_maurer} -o ${tumor_cropped_maurer_downsampled} -d 2 -l 1 -x $i -y $i -z $i -c | cut -d : -f 2)
         TUMOR_CSV_ROW_RESAMPLE+=",${t}"
 
         echo -e "\t Upsampling maurer distance (liver -- ${i})"
         liver_maurer_upsampled=${liver%.*}_maurer_upsampled_${i}.nrrd
-        ${RESAMPLE_OPERATOR} -i ${liver_maurer_downsampled} -o ${liver_maurer_upsampled} -d 2 -l 1 -x $size_x -y $size_y -z $size_z > /dev/null
+        ${RESAMPLE_OPERATOR} -i ${liver_maurer_downsampled} -o ${liver_maurer_upsampled} -d 2 -l 1 -x $size_x -y $size_y -z $size_z  -c > /dev/null
 
         echo -e "\t Upsampling maurer distance (tumor -- ${i})"
         tumor_cropped_maurer_upsampled=${tumor%.*}_maurer_upsampled_${i}.nrrd
-        ${RESAMPLE_OPERATOR} -i ${tumor_cropped_maurer_downsampled} -o ${tumor_cropped_maurer_upsampled} -d 2 -l 1 -x $bb_size_x -y $bb_size_y -z $bb_size_z > /dev/null
+        ${RESAMPLE_OPERATOR} -i ${tumor_cropped_maurer_downsampled} -o ${tumor_cropped_maurer_upsampled} -d 2 -l 1 -x $bb_size_x -y $bb_size_y -z $bb_size_z -c > /dev/null
 
         echo -e "\t Comparing interpolated downsampled and original distance maps (liver-- ${i})"
         liver_maurer_difference=${liver%.*}_maurer_difference_${i}.nrrd
