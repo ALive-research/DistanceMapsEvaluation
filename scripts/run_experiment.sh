@@ -130,7 +130,7 @@ do
 
         echo -e "\t Comparing interpolated downsampled and original distance maps (tumor-- ${i})"
         tumor_cropped_maurer_difference=${tumor%.*}_maurer_difference_${i}.nrrd
-        ${COMPARE_OPERATOR} -a $tumor_cropped_maurer -b $tumor_cropped_maurer_upsampled -k $tumor -l 1 -o -d $tumor_cropped_maurer_difference -M 10000 -m 10000 -s 10000 -e 10000
+        ${COMPARE_OPERATOR} -a $tumor_cropped_maurer -b $tumor_cropped_maurer_upsampled -k $tumor_cropped -l 1 -o -d $tumor_cropped_maurer_difference -M 10000 -m 10000 -s 10000 -e 10000
     done
 
     LIVER_CSV_ROW="${liver%.*}"
