@@ -88,7 +88,7 @@ do
 
     # Crop the tumor image
     echo -e "\t Cropping tumor image"
-    ${CROP_OPERATOR} -i $tumor -x $offset_x -y $offset_y -z $offset_z -u $bb_size_x -v $bb_size_y -w $bb_size_z -o  -c $tumor_cropped
+    ${CROP_OPERATOR} -i $tumor -x $offset_x -y $offset_y -z $offset_z -u $bb_size_x -v $bb_size_y -w $bb_size_z -o  $tumor_cropped -c
 
     # Apply Maurer
     echo -e "\t Computing Maure distance (liver)"
@@ -124,11 +124,11 @@ do
         tumor_cropped_maurer_upsampled=${tumor%.*}_maurer_upsampled_${i}.nrrd
         ${RESAMPLE_OPERATOR} -i ${tumor_cropped_maurer_downsampled} -o ${tumor_cropped_maurer_upsampled} -d 2 -l 1 -x $bb_size_x -y $bb_size_y -z $bb_size_z -c > /dev/null
 
-        echo -e "\t Comparing interpolated downsampled and original distance maps (liver-- ${i})"
+        echo -e "\t Comparing interpolated downsampled and original distance maps (liver -- ${i})"
         liver_maurer_difference=${liver%.*}_maurer_difference_${i}.nrrd
         ${COMPARE_OPERATOR} -a $liver_maurer -b $liver_maurer_upsampled -k $liver -l 1 -d $liver_maurer_difference -M 10000 -m 10000 -s 10000 -e 10000
 
-        echo -e "\t Comparing interpolated downsampled and original distance maps (tumor-- ${i})"
+        echo -e "\t Comparing interpolated downsampled and original distance maps (tumor -- ${i})"
         tumor_cropped_maurer_difference=${tumor%.*}_maurer_difference_${i}.nrrd
         ${COMPARE_OPERATOR} -a $tumor_cropped_maurer -b $tumor_cropped_maurer_upsampled -k $tumor_cropped -l 1 -o -d $tumor_cropped_maurer_difference -M 10000 -m 10000 -s 10000 -e 10000
     done
