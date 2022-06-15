@@ -23,22 +23,25 @@ CSV_HEADER+=",Size[0],Size[1],Size[2]"            # Image Size
 CSV_HEADER+=",Spacing[0],Spacing[1],Spacing[2]"   # Image Spacing
 CSV_HEADER+=",BBIndex[0],BBIndex[1],BBIndex[2]"   # Index to Bounding Box
 CSV_HEADER+=",BBSize[0],BBSize[1],BBSize[2]"      # Bounding Box Size
-CSV_HEADER+=",Maurer_Time"                        # Maurer Time
+CSV_HEADER+=",Maurer_Time (ms)"                   # Maurer Time
+CSV_HEADER+=",Downsample_Time (ms)"               # Downsample Time
 #CSV_HEADER+="BF_Time"                            # Brute-force Time
 
 # Resampling values
 RESAMPLING="25 50 100 200"
-CSV_HEADER_RESAMPLING=""
+CSV_HEADER_LIVER_RESAMPLING=""
+CSV_HEADER_TUMOR_RESAMPLING=""
 for i in ${RESAMPLING}
 do
     CSV_HEADER_LIVER_RESAMPLING+=",Maurer_liver_resampling_t[$i]" # Time for resampling process (liver at [xxx] resampling)
     CSV_HEADER_TUMOR_RESAMPLING+=",Maurer_tumor_resampling_t[$i]" # Time for resampling process (tumor at [xxx] resampling)
 done
-CSV_HEADER+=${CSV_HEADER_RESAMPLING}
+CSV_LIVER_HEADER=${CSV_HEADER}${CSV_HEADER_LIVER_RESAMPLING}
+CSV_TUMOR_HEADER=${CSV_HEADER}${CSV_HEADER_TUMOR_RESAMPLING}
 
 # Clear the CSV files and print the header
-echo ${CSV_HEADER} > ${LIVER_OUTPUT_FILE}
-echo ${CSV_HEADER} > ${TUMOR_OUTPUT_FILE}
+echo ${CSV_LIVER_HEADER} > ${LIVER_OUTPUT_FILE}
+echo ${CSV_TUMOR_HEADER} > ${TUMOR_OUTPUT_FILE}
 
 # Process Liver Data
 items=$(ls ${Dataset_DIR}/*liver*.sha256 | wc -l)
@@ -71,7 +74,7 @@ do
     size_y=$(head $liver -n 100 | awk '/sizes/' | awk -F':' '{print $2}' | awk '{print $2}')
     size_z=$(head $liver -n 100 | awk '/sizes/' | awk -F':' '{print $2}' | awk '{print $3}')
 
-    echo -e "\t Computing boundinb box for liver image"
+    echo -e "\t Computing bounding box for liver image"
 
     # Compute bounding box and crop the liver image
     bounding_box=$(${BOUNDINGBOX_OPERATOR} -i $liver -o ${liver%.*}_cropped.nrrd)
@@ -135,6 +138,7 @@ do
     LIVER_CSV_ROW+=",${spacing_x},${spacing_y},${spacing_z}"
     LIVER_CSV_ROW+=",${offset_x},${offset_y},${offset_z}"
     LIVER_CSV_ROW+=",${bb_size_x},${bb_size_y},${bb_size_z}"
+    LIVER_CSV_ROW+=",${liver_maurer_t}"
     LIVER_CSV_ROW+=${LIVER_CSV_ROW_RESAMPLE}
 
     TUMOR_CSV_ROW="${tumor%.*}"
@@ -142,6 +146,7 @@ do
     TUMOR_CSV_ROW+=",${spacing_x},${spacing_y},${spacing_z}"
     TUMOR_CSV_ROW+=",${offset_x},${offset_y},${offset_z}"
     TUMOR_CSV_ROW+=",${bb_size_x},${bb_size_y},${bb_size_z}"
+    LIVER_CSV_ROW+=",${tumor_maurer_t}"
     TUMOR_CSV_ROW+=${TUMOR_CSV_ROW_RESAMPLE}
 
     echo ${LIVER_CSV_ROW} >> ${LIVER_OUTPUT_FILE}
