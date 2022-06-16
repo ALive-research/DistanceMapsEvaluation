@@ -92,14 +92,14 @@ set_tests_properties(Test_itkSphereMaurerBaseCompare PROPERTIES DEPENDS "Test_it
 #------------------------------------------------------------------------------
 # Compare Maurer and base
 #------------------------------------------------------------------------------
-ExternalData_Add_Test(Test_itkSphereMaurerBaseCompare2
-  NAME Test_itkSphereMaurerBaseCompare2
+ExternalData_Add_Test(Test_itkMaurerBaseCompare
+  NAME Test_itkMaurerBaseCompare
   COMMAND  ${COMPARE_OPERATOR} -a ${TEST_TMP_DIR}/${LIVER_RESAMPLED_100_FILE_NAME}_bf.nrrd -b ${TEST_TMP_DIR}/${LIVER_RESAMPLED_100_FILE_NAME}_maurer.nrrd
   )
 
-ExternalData_Add_Target(Test_itkSphereMaurerBaseCompare2)
+ExternalData_Add_Target(Test_itkMaurerBaseCompare)
 
-set_tests_properties(Test_itkSphereMaurerBaseCompare PROPERTIES DEPENDS "Test_itkDistanceImageFilter2;Test_itkMaurerDistance2")
+set_tests_properties(Test_itkMaurerBaseCompare PROPERTIES DEPENDS "Test_itkDistanceImageFilter2;Test_itkMaurerDistance2")
 
 #------------------------------------------------------------------------------
 # Generate radial distance image
